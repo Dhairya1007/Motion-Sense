@@ -1,0 +1,25 @@
+const int pot_input = A1; 
+bool d1 = HIGH; 
+bool d2 = LOW;  
+void setup()
+{   
+    pinMode(1, OUTPUT);  /* Motor control pin 1 */  
+    pinMode(2, OUTPUT);  /* Motor control pin 2 */  
+    pinMode(3, OUTPUT);  /* PWM pin for Speed Control */  
+    pinMode(0, INPUT_PULLUP);  /* Interrupt pin for direction control */  
+    attachInterrupt(2, motor, FALLING);  /* Interrupt on falling edge on pin 2 */
+}  
+void loop() 
+{   
+    int pwm_adc;   
+    pwm_adc = analogRead(A1); /* Input from Potentiometer for speed control */  
+    digitalWrite(1,d1);   
+    digitalWrite(2,d2);   
+    analogWrite(3, pwm_adc / 16);     
+}  
+void motor()
+{   
+    d1 = !d1;   
+    d2 = !d2;   
+    delay(200); 
+}     
